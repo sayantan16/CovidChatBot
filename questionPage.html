@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>COVID-19 Symptoms Checker</title>
+    <script>
+      // Initialize the JSON object to store user responses
+      const userData = {};
+
+      function showNextQuestions() {
+        // Hide the current set of questions
+        document.getElementById('symptomsQuestions').style.display = 'none';
+
+        // Get the user's responses for the symptoms questions
+        const feverOrChills =
+          document.querySelector('input[name="feverOrChills"]:checked')
+            .value === 'yes';
+        const cough =
+          document.querySelector('input[name="cough"]:checked').value === 'yes';
+        const shortnessOfBreath =
+          document.querySelector('input[name="shortnessOfBreath"]:checked')
+            .value === 'yes';
+        const fatigue =
+          document.querySelector('input[name="fatigue"]:checked').value ===
+          'yes';
+        const muscleOrBodyAches =
+          document.querySelector('input[name="muscleOrBodyAches"]:checked')
+            .value === 'yes';
+        const headache =
+          document.querySelector('input[name="headache"]:checked').value ===
+          'yes';
+
+        // Add the responses to the JSON object
+        userData.Symptoms = {
+          FeverOrChills: feverOrChills,
+          Cough: cough,
+          ShortnessOfBreath: shortnessOfBreath,
+          Fatigue: fatigue,
+          MuscleOrBodyAches: muscleOrBodyAches,
+          Headache: headache,
+        };
+
+        // Show the next set of questions
+        document.getElementById('exposureQuestions').style.display = 'block';
+      }
+
+      function submitExposureAndTravel() {
+        // Get the user's responses for the exposure and travel questions
+        const closeContact =
+          document.querySelector('input[name="closeContact"]:checked').value ===
+          'yes';
+        const traveledToHighRisk =
+          document.querySelector('input[name="traveledToHighRisk"]:checked')
+            .value === 'yes';
+        const traveledToHighPrevalence =
+          document.querySelector(
+            'input[name="traveledToHighPrevalence"]:checked'
+          ).value === 'yes';
+
+        // Add the responses to the JSON object
+        userData.ExposureHistory = {
+          CloseContact: closeContact,
+          TraveledToHighRisk: traveledToHighRisk,
+        };
+
+        userData.TravelHistory = {
+          TraveledToHighPrevalence: traveledToHighPrevalence,
+        };
+
+        // Display the JSON object
+        document.getElementById('result').innerHTML = JSON.stringify(
+          userData,
+          null,
+          2
+        );
+      }
+    </script>
+  </head>
+  <body>
+    <h1>COVID-19 Symptoms Checker</h1>
+
+    <div id="symptomsQuestions">
+      <h2>Symptoms</h2>
+      <!-- Questions for Symptoms -->
+      <form>
+        <!-- ... The same radio button questions for symptoms ... -->
+        <h2>Symptoms</h2>
+        <label for="feverOrChills">Fever or chills:</label>
+        <input type="radio" name="feverOrChills" value="yes" /> Yes
+        <input type="radio" name="feverOrChills" value="no" /> No<br />
+
+        <label for="cough">Cough (dry or productive):</label>
+        <input type="radio" name="cough" value="yes" /> Yes
+        <input type="radio" name="cough" value="no" /> No<br />
+
+        <label for="shortnessOfBreath"
+          >Shortness of breath or difficulty breathing:</label
+        >
+        <input type="radio" name="shortnessOfBreath" value="yes" /> Yes
+        <input type="radio" name="shortnessOfBreath" value="no" /> No<br />
+
+        <label for="fatigue">Fatigue:</label>
+        <input type="radio" name="fatigue" value="yes" /> Yes
+        <input type="radio" name="fatigue" value="no" /> No<br />
+
+        <label for="muscleOrBodyAches">Muscle or body aches:</label>
+        <input type="radio" name="muscleOrBodyAches" value="yes" /> Yes
+        <input type="radio" name="muscleOrBodyAches" value="no" /> No<br />
+
+        <label for="headache">Headache:</label>
+        <input type="radio" name="headache" value="yes" /> Yes
+        <input type="radio" name="headache" value="no" /> No<br />
+
+        <input type="button" value="Submit" onclick="submitSymptoms()" />
+        <input type="button" value="Next" onclick="showNextQuestions()" />
+      </form>
+    </div>
+
+    <div id="exposureQuestions" style="display: none">
+      <h2>Exposure History</h2>
+      <!-- Questions for Exposure History -->
+      <form>
+        <label for="closeContact"
+          >Have you been in close contact with someone who tested positive for
+          COVID-19 in the past 14 days?</label
+        >
+        <input type="radio" name="closeContact" value="yes" /> Yes
+        <input type="radio" name="closeContact" value="no" /> No<br />
+
+        <label for="traveledToHighRisk"
+          >Have you recently traveled to an area with a high number of COVID-19
+          cases?</label
+        >
+        <input type="radio" name="traveledToHighRisk" value="yes" /> Yes
+        <input type="radio" name="traveledToHighRisk" value="no" /> No<br />
+
+        <h2>Travel History</h2>
+        <!-- Questions for Travel History -->
+        <label for="traveledToHighPrevalence"
+          >Have you traveled to an area with a high prevalence of COVID-19
+          recently?</label
+        >
+        <input type="radio" name="traveledToHighPrevalence" value="yes" /> Yes
+        <input type="radio" name="traveledToHighPrevalence" value="no" />
+        No<br />
+
+        <input
+          type="button"
+          value="Submit"
+          onclick="submitExposureAndTravel()"
+        />
+      </form>
+    </div>
+
+    <h2>Result:</h2>
+    <pre id="result"></pre>
+  </body>
+</html>
