@@ -1,157 +1,247 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>COVID-19 Symptoms Checker</title>
-    <script>
-      // Initialize the JSON object to store user responses
-      const userData = {};
-
-      function showNextQuestions() {
-        // Hide the current set of questions
-        document.getElementById('symptomsQuestions').style.display = 'none';
-
-        // Get the user's responses for the symptoms questions
-        const feverOrChills =
-          document.querySelector('input[name="feverOrChills"]:checked')
-            .value === 'yes';
-        const cough =
-          document.querySelector('input[name="cough"]:checked').value === 'yes';
-        const shortnessOfBreath =
-          document.querySelector('input[name="shortnessOfBreath"]:checked')
-            .value === 'yes';
-        const fatigue =
-          document.querySelector('input[name="fatigue"]:checked').value ===
-          'yes';
-        const muscleOrBodyAches =
-          document.querySelector('input[name="muscleOrBodyAches"]:checked')
-            .value === 'yes';
-        const headache =
-          document.querySelector('input[name="headache"]:checked').value ===
-          'yes';
-
-        // Add the responses to the JSON object
-        userData.Symptoms = {
-          FeverOrChills: feverOrChills,
-          Cough: cough,
-          ShortnessOfBreath: shortnessOfBreath,
-          Fatigue: fatigue,
-          MuscleOrBodyAches: muscleOrBodyAches,
-          Headache: headache,
-        };
-
-        // Show the next set of questions
-        document.getElementById('exposureQuestions').style.display = 'block';
-      }
-
-      function submitExposureAndTravel() {
-        // Get the user's responses for the exposure and travel questions
-        const closeContact =
-          document.querySelector('input[name="closeContact"]:checked').value ===
-          'yes';
-        const traveledToHighRisk =
-          document.querySelector('input[name="traveledToHighRisk"]:checked')
-            .value === 'yes';
-        const traveledToHighPrevalence =
-          document.querySelector(
-            'input[name="traveledToHighPrevalence"]:checked'
-          ).value === 'yes';
-
-        // Add the responses to the JSON object
-        userData.ExposureHistory = {
-          CloseContact: closeContact,
-          TraveledToHighRisk: traveledToHighRisk,
-        };
-
-        userData.TravelHistory = {
-          TraveledToHighPrevalence: traveledToHighPrevalence,
-        };
-
-        // Display the JSON object
-        document.getElementById('result').innerHTML = JSON.stringify(
-          userData,
-          null,
-          2
-        );
-      }
-    </script>
+    <title>COVID-19 Symptoms Survey</title>
+    <!-- Include Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
   </head>
   <body>
-    <h1>COVID-19 Symptoms Checker</h1>
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-body">
+              <h1 class="card-title text-center" style="padding-bottom: 20%">
+                COVID-19 Symptoms Survey
+              </h1>
+              <div id="questionnaire">
+                <form id="symptomsForm">
+                  <div class="form-group row">
+                    <label for="fever" class="col-lg-6 col-form-label"
+                      >Fever or chills</label
+                    >
+                    <div class="col-lg-6">
+                      <div
+                        class="btn-group btn-group-toggle"
+                        data-toggle="buttons"
+                      >
+                        <label class="btn btn-secondary">
+                          <input type="radio" name="fever" value="Yes" /> Yes
+                        </label>
+                        <label class="btn btn-secondary">
+                          <input type="radio" name="fever" value="No" /> No
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <!-- Add more questions for the "Symptoms" section -->
 
-    <div id="symptomsQuestions">
-      <h2>Symptoms</h2>
-      <!-- Questions for Symptoms -->
-      <form>
-        <!-- ... The same radio button questions for symptoms ... -->
-        <h2>Symptoms</h2>
-        <label for="feverOrChills">Fever or chills:</label>
-        <input type="radio" name="feverOrChills" value="yes" /> Yes
-        <input type="radio" name="feverOrChills" value="no" /> No<br />
+                  <div class="form-group text-center" style="padding-top: 10%">
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      id="nextButton"
+                    >
+                      Next
+                    </button>
+                  </div>
+                </form>
+              </div>
 
-        <label for="cough">Cough (dry or productive):</label>
-        <input type="radio" name="cough" value="yes" /> Yes
-        <input type="radio" name="cough" value="no" /> No<br />
-
-        <label for="shortnessOfBreath"
-          >Shortness of breath or difficulty breathing:</label
-        >
-        <input type="radio" name="shortnessOfBreath" value="yes" /> Yes
-        <input type="radio" name="shortnessOfBreath" value="no" /> No<br />
-
-        <label for="fatigue">Fatigue:</label>
-        <input type="radio" name="fatigue" value="yes" /> Yes
-        <input type="radio" name="fatigue" value="no" /> No<br />
-
-        <label for="muscleOrBodyAches">Muscle or body aches:</label>
-        <input type="radio" name="muscleOrBodyAches" value="yes" /> Yes
-        <input type="radio" name="muscleOrBodyAches" value="no" /> No<br />
-
-        <label for="headache">Headache:</label>
-        <input type="radio" name="headache" value="yes" /> Yes
-        <input type="radio" name="headache" value="no" /> No<br />
-
-        <input type="button" value="Submit" onclick="submitSymptoms()" />
-        <input type="button" value="Next" onclick="showNextQuestions()" />
-      </form>
+              <div id="result" class="mt-4"></div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div id="exposureQuestions" style="display: none">
-      <h2>Exposure History</h2>
-      <!-- Questions for Exposure History -->
-      <form>
-        <label for="closeContact"
-          >Have you been in close contact with someone who tested positive for
-          COVID-19 in the past 14 days?</label
-        >
-        <input type="radio" name="closeContact" value="yes" /> Yes
-        <input type="radio" name="closeContact" value="no" /> No<br />
+    <!-- Include Bootstrap JS and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        <label for="traveledToHighRisk"
-          >Have you recently traveled to an area with a high number of COVID-19
-          cases?</label
-        >
-        <input type="radio" name="traveledToHighRisk" value="yes" /> Yes
-        <input type="radio" name="traveledToHighRisk" value="no" /> No<br />
+    <script>
+      const questionnaire = document.getElementById('questionnaire');
+      const resultElement = document.getElementById('result');
+      let currentSection = 0;
+      const sections = [
+        {
+          title: 'Symptoms',
+          questions: [
+            'Fever or chills',
+            'Cough (dry or productive)',
+            'Shortness of breath or difficulty breathing',
+            'Fatigue',
+            'Muscle or body aches',
+            'Headache',
+          ],
+          index: [
+            'Symptom 1',
+            'Symptom 2',
+            'Symptom 3',
+            'Symptom 4',
+            'Symptom 5',
+            'Symptom 6',
+          ],
+        },
+        {
+          title: 'Exposure History',
+          questions: [
+            'Have you been in close contact with someone who tested positive for COVID-19 in the past 14 days?',
+            'Have you recently traveled to an area with a high number of COVID-19 cases?',
+          ],
+          index: ['Exposure History 1', 'Exposure History 2'],
+        },
+        {
+          title: 'Travel History',
+          questions: [
+            'Have you traveled to an area with a high prevalence of COVID-19 recently?',
+          ],
+          index: ['Travel History 1'],
+        },
+        {
+          title: 'Testing History',
+          questions: [
+            'Have you been tested for COVID-19? If so, when, and what were the results?',
+            'Are you awaiting the results of a COVID-19 test?',
+          ],
+          index: ['Testing History 1', 'Testing History 2'],
+        },
+        {
+          title: 'Medical History',
+          questions: [
+            'Do you have any underlying medical conditions (e.g., diabetes, heart disease, lung disease) that may put you at higher risk for severe COVID-19 symptoms?',
+          ],
+          index: ['Medical History 1'],
+        },
+        {
+          title: 'Vaccination Status',
+          questions: [
+            'Have you been vaccinated for COVID-19, and if so, which vaccine(s) did you receive, and when did you receive them?',
+          ],
+          index: ['Vaccination History 1'],
+        },
+        {
+          title: 'Recent Close Contacts',
+          questions: [
+            'Have you informed your close contacts if you tested positive for COVID-19?',
+          ],
+          index: ['Recent Close Contacts 1'],
+        },
 
-        <h2>Travel History</h2>
-        <!-- Questions for Travel History -->
-        <label for="traveledToHighPrevalence"
-          >Have you traveled to an area with a high prevalence of COVID-19
-          recently?</label
-        >
-        <input type="radio" name="traveledToHighPrevalence" value="yes" /> Yes
-        <input type="radio" name="traveledToHighPrevalence" value="no" />
-        No<br />
+        {
+          title: 'Isolation and Quarantine',
+          questions: [
+            'Are you currently following recommended isolation or quarantine guidelines if you have been exposed to or tested positive for COVID-19?',
+          ],
+          index: ['Isolation and Quarantine 1'],
+        },
 
-        <input
-          type="button"
-          value="Submit"
-          onclick="submitExposureAndTravel()"
-        />
-      </form>
-    </div>
+        {
+          title: 'Healthcare Consultation',
+          questions: [
+            'Have you consulted with a healthcare professional regarding your symptoms or potential exposure to COVID-19?',
+          ],
+          index: ['Healthcare Consultation 1'],
+        },
 
-    <h2>Result:</h2>
-    <pre id="result"></pre>
+        {
+          title: 'Travel and Activity History',
+          questions: [
+            'Have you recently attended gatherings, events, or been in crowded places where there was a potential risk of exposure to COVID-19?',
+          ],
+          index: ['Travel and Activity History 1'],
+        },
+      ];
+
+      const answers = {};
+
+      function renderSection() {
+        if (currentSection < sections.length) {
+          const section = sections[currentSection];
+          const sectionHTML = `
+                    <h1 class="card-title text-center">${section.title}</h1>
+                    <form id="sectionForm">
+                        ${section.questions
+                          .map(
+                            (question, index) => `
+                                <div class="form-group row">
+                                    <label for="question${index}" class="col-lg-6 col-form-label">${question}</label>
+                                    <div class="col-lg-6">
+                                        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="question${index}" value="Yes"> Yes
+                                            </label>
+                                            <label class="btn btn-secondary">
+                                                <input type="radio" name="question${index}" value="No"> No
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            `
+                          )
+                          .join('')}
+                        ${
+                          currentSection === sections.length - 1
+                            ? `
+                                <div class="form-group text-center" style="padding-top: 10%">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+                            `
+                            : `
+                                <div class="form-group text-center" style="padding-top: 10%">
+                                    <button type="button" class="btn btn-primary" id="nextButton">Next</button>
+                                </div>
+                            `
+                        }
+                    </form>
+                `;
+          questionnaire.innerHTML = sectionHTML;
+
+          const sectionForm = document.getElementById('sectionForm');
+
+          if (currentSection === sections.length - 1) {
+            sectionForm.addEventListener('submit', function (event) {
+              event.preventDefault();
+              const formData = new FormData(sectionForm);
+              const sectionAnswers = {};
+
+              formData.forEach((value, key) => {
+                const questionIndex = key.match(/\d+/)[0];
+                const questionKey = section.index[questionIndex]; // Use index array to replace keys
+                sectionAnswers[questionKey] = value;
+              });
+
+              answers[section.title] = sectionAnswers;
+
+              // Display the result when the last section is submitted
+              resultElement.innerHTML = JSON.stringify(answers, null, 2);
+            });
+          } else {
+            const nextButton = document.getElementById('nextButton');
+            nextButton.addEventListener('click', function () {
+              const formData = new FormData(sectionForm);
+              const sectionAnswers = {};
+
+              formData.forEach((value, key) => {
+                const questionIndex = key.match(/\d+/)[0];
+                const questionKey = section.index[questionIndex]; // Use index array to replace keys
+                sectionAnswers[questionKey] = value;
+              });
+
+              answers[section.title] = sectionAnswers;
+
+              currentSection++;
+              renderSection();
+            });
+          }
+        }
+      }
+
+      renderSection();
+    </script>
   </body>
 </html>

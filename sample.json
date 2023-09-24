@@ -1,0 +1,22 @@
+{
+  "Symptoms": {
+    "Symptom 1": "Yes",
+    "Symptom 2": "No",
+    "Symptom 3": "Yes",
+    "Symptom 4": "No",
+    "Symptom 5": "Yes",
+    "Symptom 6": "Yes"
+  },
+  "Exposure History": {
+    "Exposure History 1": "Yes",
+    "Exposure History 2": "Yes"
+  },
+  "Travel History": { "Travel History 1": "No" },
+  "Testing History": { "Testing History 1": "No", "Testing History 2": "No" },
+  "Medical History": { "Medical History 1": "Yes" },
+  "Vaccination Status": { "Vaccination History 1": "No" },
+  "Recent Close Contacts": { "Recent Close Contacts 1": "Yes" },
+  "Isolation and Quarantine": { "Isolation and Quarantine 1": "No" },
+  "Healthcare Consultation": { "Healthcare Consultation 1": "Yes" },
+  "Travel and Activity History": { "Travel and Activity History 1": "No" }
+}
